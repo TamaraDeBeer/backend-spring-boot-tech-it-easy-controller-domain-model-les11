@@ -2,7 +2,6 @@ package com.example.backendspringboottechiteasycontrollerles10.controllers;
 
 import com.example.backendspringboottechiteasycontrollerles10.dtos.ciModules.CiModuleDto;
 import com.example.backendspringboottechiteasycontrollerles10.dtos.ciModules.CiModuleInputDto;
-import com.example.backendspringboottechiteasycontrollerles10.dtos.wallBrackets.WallBracketInputDto;
 import com.example.backendspringboottechiteasycontrollerles10.exceptions.RecordNotFoundException;
 import com.example.backendspringboottechiteasycontrollerles10.models.CiModule;
 import com.example.backendspringboottechiteasycontrollerles10.services.CiModuleService;
