@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+Actor "User" as user
+participant "Television Controller" as controller
+participant "Television Service" as service
+participant "Television Repository" as repository
+participant "Remote Control Repository" as remoteRepository
+participant "Database" as database
+
+activate user
+user -> controller: assignRemoteControllerToTelevision()
+activate controller
+controller -> service: assignRemoteControllerToTelevision(TelevisionID & RemoteControlId)
+activate service
+service -> repository: findTelevisionById(TelevisionID)
+activate repository
+repository -> database: SELECT * FROM Television WHERE id = TelevisionID
+activate database
+database -> repository: Television
+repository -> service: Optional<Television>
+service -> remoteRepository: findRemoteControlById(RemoteControlId)
+activate remoteRepository
+remoteRepository -> database: SELECT * FROM RemoteControl WHERE id = RemoteControlId
+database -> remoteRepository: RemoteControl
+remoteRepository -> service: Optional<RemoteControl>
+deactivate remoteRepository
+service -> service: setRemoteControl
+service -> repository: saveTelevision(Television)
+repository -> database: UPDATE Television SET remoteControlId = RemoteControlId WHERE id = TelevisionID
+database -> repository: Television
+deactivate database
+repository -> service: Television
+deactivate repository
+service -> controller: Void
+deactivate service
+controller -> user: ResponseEntity.noContent().build()
+deactivate controller
+deactivate user
+
+@enduml

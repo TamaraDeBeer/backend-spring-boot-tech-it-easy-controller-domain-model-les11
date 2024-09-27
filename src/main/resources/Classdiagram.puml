@@ -1,0 +1,55 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Television {
+-id: Long
+-type: String
+-brand: String
+-name: String
+-price: Double
+-availableSize: Double
+-refreshRate: Double
+-screenType: String
+-screenQuality: String
+-smartTv: Boolean
+-wifi: Boolean
+-voiceControl: Boolean
+-hdr: Boolean
+-bluetooth: Boolean
+-ambiLight: Boolean
+-originalStock: Integer
+-sold: Integer
+}
+
+class RemoteControl {
+-id: Long
+-compatibleWith: List<String>
+-batteryType: String
+-name: String
+-brand: String
+-price: Double
+-originalStock: Integer
++getCompatibleWith(): List<String>
+}
+
+class WallBracket {
+-id: Long
+-size: String
+-adjustable: Boolean
+-name: String
+-price: Double
+}
+
+class CiModule {
+-id: Long
+-name: String
+-type: String
+-price: Double
+}
+
+Television "1"-[#green]-"1" RemoteControl
+Television "1..*"-[#green]-"1..*" WallBracket
+Television "1..*"-[#green]-"1" CiModule
+
+
+@enduml

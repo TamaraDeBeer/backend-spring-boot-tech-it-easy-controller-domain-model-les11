@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+Actor "User" as user
+participant "Television Controller" as controller
+participant "Television Service" as service
+participant "Television Repository" as repository
+participant "Ci Module Repository" as ciModuleRepository
+participant "Database" as database
+
+activate user
+user -> controller: assignCiModuleToTelevision()
+activate controller
+controller -> service: assignCiModuleToTelevision(TelevisionID & CiModuleId)
+activate service
+service -> repository: findTelevisionById(TelevisionID)
+activate repository
+repository -> database: SELECT * FROM Television WHERE id = TelevisionID
+activate database
+database -> repository: Television
+repository -> service: Optional<Television>
+service -> ciModuleRepository: findCiModuleById(CiModuleId)
+activate ciModuleRepository
+ciModuleRepository -> database: SELECT * FROM CiModule WHERE id = CiModuleId
+database -> ciModuleRepository: CiModule
+ciModuleRepository -> service: Optional<CiModule>
+deactivate ciModuleRepository
+service -> service: setCiModule
+service -> repository: saveTelevision(Television)
+repository -> database: UPDATE Television SET ciModuleId = CiModuleId WHERE id = TelevisionID
+database -> repository: Television
+deactivate database
+repository -> service: Television
+deactivate repository
+service -> controller: Void
+deactivate service
+controller -> user: ResponseEntity.noContent().build()
+deactivate controller
+deactivate user
+
+@enduml

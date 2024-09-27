@@ -9,5 +9,4 @@ public class BackendSpringBootTechItEasyControllerLes10Application {
     public static void main(String[] args) {
         SpringApplication.run(BackendSpringBootTechItEasyControllerLes10Application.class, args);
     }
-
 }
